@@ -1,0 +1,24 @@
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+
+  .button {
+    background-color: #fb751b;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 35px;
+    color: #fff;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .result {
+    padding: 20px;
+    font-size: 35px;
+  }
+}
