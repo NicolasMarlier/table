@@ -22,36 +22,8 @@
             flex: 0 0 50%;
             background-color: #222;
             position: relative;
-
-            .results {
-                display: flex;
-                justify-content: space-around;
-                position: absolute;
-                top: 10px;
-                left: 0;
-                right: 0;
-
-                .result {
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 10px;
-                    
-                    &.current {
-                        background-color: #ccc;
-                    }
-
-                    &.unanswered {
-                        background-color: #444;
-                    }
-
-                    &.correct {
-                     background-color: green;   
-                    }
-                    &.incorrect {
-                        background-color: red;    
-                    }
-                }
-            }
+            display: flex;
+            flex-direction: column;
         }
         .question {
             height: 100%;
@@ -60,15 +32,73 @@
             justify-content: center;
             color: #aaa;
             font-size: 60px;
+            padding: 20px 0;
+            flex: 0 0 80px;
 
             .answer {
                 color: #fff;
                 padding: 0 0 0 0.2em;
             }
         }
+        .image {
+            flex: 1 0 10px;
+            overflow: hidden;
+            img {
+                height: 100%;
+            }
+        }
         #numpad {
             flex: 0 0 50%;
             background-color: green;
+        }
+    }
+
+    .top {
+        width: 100%;
+    }
+
+    .results {
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-around;
+
+        .result {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px #000;
+            
+            &.current {
+                background-color: #ccc;
+                img {
+                    filter: brightness(0);;
+                }
+            }
+
+            &.unanswered {
+                background-color: #444;
+                img {
+                    filter: brightness(0);;
+                }
+            }
+
+            &.correct {
+                background-color: #0f0;
+                box-shadow: 0 0 20px #0f0;
+            }
+            &.incorrect {
+                background-color: #a00;
+                
+                img {
+                    filter: brightness(0);;
+                }
+            }
+            img {
+                width: 60%;
+            }
         }
     }
 }

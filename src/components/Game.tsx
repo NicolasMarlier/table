@@ -6,19 +6,22 @@ const Game = () => {
     const [questions, setQuestions] = useState([] as Question[])
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1)
     const [currentAnswer, setCurrentAnswer] = useState(undefined as number | undefined)
-
+    const [salt, setSalt] = useState(0)
     const setup = () => {
+        setSalt(getRandomInt(10))
         setQuestions([...Array(5)].map(() => createRandomQuestion()))   
     }
 
     useEffect(() => {
         setCurrentQuestionIndex(questions.findIndex((q: Question) => q.answer === undefined))
     }, [questions])
-
+    
     const createRandomQuestion = (): Question => {
         const a = getRandomInt(6)
         const b = getRandomInt(10)
         return {
+            a,
+            b,
             label: `${a} x ${b} = `,
             correct_answer: a*b,
             answer: undefined
@@ -57,6 +60,10 @@ const Game = () => {
         return 'unanswered'
     }
 
+    const getSvg = (question: Question) => {
+        return `svg/${question.a * 10 + question.b + 1 + salt}.svg`
+    }
+
     const answeredQuestions = questions.filter((q: Question) => q.answer !== undefined)
     return <div id='game'>
         { currentQuestionIndex === -1 && questions.length === 0 && <div className='menu'>
@@ -64,14 +71,28 @@ const Game = () => {
         </div>
         }
         { currentQuestionIndex === -1 && questions.length > 0 && <div className='menu'>
-            <div className='result'>{ questions.filter(q => questionStatus(q,0) === 'correct').length} / { questions.length }</div>
+            <div className="top">
+                <div className='results'>
+                    { questions.map((q, i) => <div
+                        className={`result ${questionStatus(q, i)}`}>
+                            <img src={getSvg(q)}/>
+                        </div>) }
+                </div>
+            </div>
+            <div className='game-result'>{ questions.filter(q => questionStatus(q,0) === 'correct').length} / { questions.length }</div>
             <div className='button' onClick={setup}>Recommencer une partie</div>
         </div>
         }
         { currentQuestionIndex > -1 && <div className='game-mode'>
             <div className="top">
                 <div className='results'>
-                    { questions.map((q, i) => <div className={`result ${questionStatus(q, i)}`}/>) }
+                    { questions.map((q, i) => <div
+                        className={`result ${questionStatus(q, i)}`}>
+                            <img src={getSvg(q)}/>
+                        </div>) }
+                </div>
+                <div className='image'>
+                    <img src={getSvg(questions[currentQuestionIndex])}/>
                 </div>
                 <div className="question">
                     {questions[currentQuestionIndex].label}
