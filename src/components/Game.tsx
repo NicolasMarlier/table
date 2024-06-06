@@ -98,8 +98,8 @@ const Game = () => {
         return 'unanswered'
     }
 
-    const getSvg = (question: Question) => {
-        return `svg/${(question.a * 10 + question.b + 1 + salt) % 150 + 1}.svg`
+    const getSvg = (question: Question, s: number) => {
+        return `svg/${(question.a * 10 + question.b + 1 + s) % 150 + 1}.svg`
     }
 
     const answeredQuestions = questions.filter((q: Question) => q.answer !== undefined)
@@ -114,7 +114,7 @@ const Game = () => {
                 <div className='results'>
                     { questions.map((q, i) => <div
                         className={`result ${questionStatus(q, i)}`}>
-                            <img src={getSvg(q)}/>
+                            <img src={getSvg(q, salt)}/>
                         </div>) }
                 </div>
             </div>
@@ -127,11 +127,11 @@ const Game = () => {
                 <div className='results'>
                     { questions.map((q, i) => <div
                         className={`result ${questionStatus(q, i)}`}>
-                            <img src={getSvg(q)}/>
+                            <img src={getSvg(q, salt)}/>
                         </div>) }
                 </div>
                 <div className='image'>
-                    <img src={getSvg(questions[currentQuestionIndex])}/>
+                    <img src={getSvg(questions[currentQuestionIndex], salt)}/>
                 </div>
                 <div className="question">
                     {questions[currentQuestionIndex].label}
