@@ -73,12 +73,12 @@ const Game = () => {
     const answer = (value: number) => {
         const correct = value == questions[currentQuestionIndex].correct_answer;
 
-        if(correct) {
-            launchPokeballSuccess()
-        }
-        else {
-            launchPokeballFail()
-        }
+        // if(correct) {
+        //     launchPokeballSuccess()
+        // }
+        // else {
+        //     launchPokeballFail()
+        // }
         setTimeout(() => {
             setQuestions([
                 ...questions.slice(0, currentQuestionIndex),
@@ -92,7 +92,7 @@ const Game = () => {
                 ]
             )
             setCurrentAnswer(undefined)
-        }, 1000);
+        }, 0);
     }    
 
     const questionStatus = ({answer, correct_answer}: Question, index: number) => {
