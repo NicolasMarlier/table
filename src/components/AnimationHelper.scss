@@ -1,0 +1,77 @@
+img#pokeball {
+    position: fixed;
+    z-index: 2;
+    display: block;
+    margin: -50px 0 0 -50px;
+    width: 100px !important;
+    height: 100px !important;
+    opacity: 0.0;
+
+    &.launched-success {
+        animation: 1s ease-in launchSuccess;
+    }
+    &.launched-failed {
+        animation: 1s ease-in launchFailed;
+    }
+
+    @keyframes launchSuccess {
+        0% {
+            opacity: 1.0;
+            transform: translate(1000px, 400px) scale(6);
+        }
+        33% {
+            transform: translate(0px, 0px) scale(1.0);
+        }
+        100% {
+            opacity: 1.0;
+            transform: scale(1.0);
+        }
+    }
+
+    @keyframes launchFailed {
+        0% {
+            opacity: 1.0;
+            transform: translate(1000px, 400px) scale(3);
+        }
+        100% {
+            opacity: 1.0;
+            transform: translate(-1000px, -400px) scale(0.2);
+        }
+    }
+}
+
+#pokemon {
+    &.launched-success {
+        animation: 1s ease-in disappear;
+    }
+
+    &.launched-failed {
+        animation: 1s ease-out leave;
+    }
+
+    @keyframes disappear {
+        0% {
+            transform: scale(1.0);
+        }
+        50% {
+            filter: brightness(1);
+        }
+        80% {
+            filter: brightness(100);
+            transform: scale(1.0);
+        }
+        100% {
+            transform: scale(0.1);
+        }
+    }
+
+    @keyframes leave {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+        
+        100% {
+            transform: translate(600px, 0) scale(0.3);
+        }
+    }
+}

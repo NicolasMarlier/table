@@ -1,63 +1,44 @@
+import './AnimationHelper.scss'
+
 const launchPokeballSuccess = () => {
     const pokeball = document.getElementById("pokeball")
     const pokemon= document.getElementById("pokemon")
     if(pokeball === null || pokemon == null) return
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const pokeballWidth = 100;
-    const pokeballHeight = 100;
-    const pokemonX = pokemon.getBoundingClientRect().x;
-    const pokemonY = pokemon.getBoundingClientRect().y;
-    const pokemonWidth = Math.round(pokemon.getBoundingClientRect().width);
-    const pokemonHeight = Math.round(pokemon.getBoundingClientRect().height);
+
+    const pokemonRect = pokemon.getBoundingClientRect()
+    const pokeballRect = pokemon.getBoundingClientRect()
+    pokeball.style.top = `${pokemonRect.top + (pokeballRect.height) / 2}px`
+    pokeball.style.left = `${pokemonRect.left + (pokeballRect.width) / 2}px`
     
-    pokeball.animate(
-        [
-            { opacity: 1, transform: `translateY(${windowHeight}px) translateX(${windowWidth}px) scale(1)` },
-            { opacity: 1, transform: `translateY(${pokemonY + (pokemonHeight - pokeballHeight) / 2}px) translateX(${pokemonX + (pokemonWidth - pokeballWidth) / 2}px) scale(0.15)` },
-            { opacity: 1, transform: `translateY(${pokemonY + (pokemonHeight - pokeballHeight) / 2}px) translateX(${pokemonX + (pokemonWidth - pokeballWidth) / 2}px) scale(0.15)` },
-            { opacity: 1, transform: `translateY(${pokemonY + (pokemonHeight - pokeballHeight) / 2}px) translateX(${pokemonX + (pokemonWidth - pokeballWidth) / 2}px) scale(0.15)` },
-        ],
-        {
-          duration: 1000,
-          iterations: 1,
-          easing: "ease-out"
-        },
-      );
-    pokemon.animate(
-    [
-        { filter: 'brightness(1)' },
-        { filter: 'brightness(1)' },
-        { filter: 'brightness(100)' },
-        { opacity: 0 },
-    ],
-    {
-        duration: 1000,
-        iterations: 1,
-        easing: "ease-out"
-    },
-    );
+    pokeball.classList.add("launched-success");
+    pokemon.classList.add("launched-success");
+    
+    setTimeout(() => {
+        pokeball.classList.remove("launched-success");
+        pokemon.classList.remove("launched-success");
+    }, 1000)
 }
 
 const launchPokeballFail = () => {
     const pokeball = document.getElementById("pokeball")
     const pokemon= document.getElementById("pokemon")
     if(pokeball === null || pokemon == null) return
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    pokeball.animate(
-        [
-            { opacity: 1, transform: `translateY(${windowHeight}px) translateX(${windowWidth}px) scale(1)` },
-            { opacity: 1, transform: `translateY(-50px) translateX(${windowWidth / 2}px) scale(0.05)` },
-            
-        ],
-        {
-          duration: 1000,
-          iterations: 1,
-          easing: "ease-out"
-        },
-      );
+
+    const pokemonRect = pokemon.getBoundingClientRect()
+    const pokeballRect = pokemon.getBoundingClientRect()
+    pokeball.style.top = `${pokemonRect.top + (pokeballRect.height) / 2}px`
+    pokeball.style.left = `${pokemonRect.left + (pokeballRect.width) / 2}px`
+
+    pokeball.classList.add("launched-failed");
+    pokemon.classList.add("launched-failed");
+    
+    setTimeout(() => {
+        pokeball.classList.remove("launched-failed");
+        pokemon.classList.remove("launched-failed");
+    }, 1000)
 }
+
+
 export {
     launchPokeballSuccess,
     launchPokeballFail

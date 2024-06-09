@@ -73,12 +73,12 @@ const Game = () => {
     const answer = (value: number) => {
         const correct = value == questions[currentQuestionIndex].correct_answer;
 
-        // if(correct) {
-        //     launchPokeballSuccess()
-        // }
-        // else {
-        //     launchPokeballFail()
-        // }
+        if(correct) {
+            launchPokeballSuccess()
+        }
+        else {
+            launchPokeballFail()
+        }
         setTimeout(() => {
             setQuestions([
                 ...questions.slice(0, currentQuestionIndex),
@@ -92,7 +92,7 @@ const Game = () => {
                 ]
             )
             setCurrentAnswer(undefined)
-        }, 0);
+        }, 1000);
     }    
 
     const questionStatus = ({answer, correct_answer}: Question, index: number) => {
@@ -147,7 +147,6 @@ const Game = () => {
                 </div>
                 <div className='image'>
                     <img id='pokemon' src={getSvg(questions[currentQuestionIndex], salt)}/>
-                    <img id='pokeball' src="pokeball.png"/>
                 </div>
                 <div className="question">
                     {questions[currentQuestionIndex].label}
@@ -158,6 +157,7 @@ const Game = () => {
             <NumPad onSubmit={answer} onValueChanged={setCurrentAnswer} reset={currentQuestionIndex}/>
             <div className="quit-button" onClick={quit}><img src='close.png'/></div>
         </div>}
+        <img id='pokeball' src="pokeball.png"/>
         
     </div>
 }

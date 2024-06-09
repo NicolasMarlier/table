@@ -44,6 +44,7 @@
             flex: 1 0 10px;
             overflow: hidden;
             position: relative;
+            
             img {
                 height: 100%;
             }
@@ -101,16 +102,6 @@
                 width: 60%;
             }
         }
-    }
-
-    #pokeball {
-        position: fixed;
-        z-index: 2;
-        top: 0;
-        left: 0;
-        transform: scale(0.2);
-        transform-origin: top left;
-        opacity: 0;
     }
 
     .quit-button {
