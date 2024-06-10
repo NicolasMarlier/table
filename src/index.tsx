@@ -1,15 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+import Menu from './components/Menu';
+import GameComponent from './components/GameComponent';
+import HighScores from './components/HighScores';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Menu/>,
+  },
+  {
+    path: "/game/:game_mode",
+    element: <GameComponent/>,
+  },
+  {
+    path: "/highscores",
+    element: <HighScores/>,
+  },
+]);
+
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
