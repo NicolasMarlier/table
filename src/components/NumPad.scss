@@ -25,9 +25,28 @@
             background-color: #666;
             border-radius: 10px;
             color: #fff;
+            user-select: none;
+            transition: transform 0.1s;
 
             &:hover {
                 background-color: #777;
+            }
+
+        }
+    }
+}
+
+@media (hover:none), (hover:on-demand) {
+    #numpad {
+        .keyboard {
+            .key {
+                &:hover {
+                    background-color: #666;
+                }
+                &:active {
+                    background: #63f0cf;
+                    transform: scale(1.2);
+                }
             }
         }
     }
