@@ -8,6 +8,7 @@ import { saveGameStats } from "./StorageHelper";
 import { displayDuration } from "./FormatHelper";
 
 const GameComponent = () => {
+    const QUESTIONS_COUNT = 2
     const { game_mode: gameMode  } = useParams();
     const [questions, setQuestions] = useState([] as Question[])
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1)
@@ -22,11 +23,11 @@ const GameComponent = () => {
 
     useEffect(() => {
         if(gameMode === 'multiplication') {
-            setQuestions([...Array(6)].map(() => createRandomMultiplicationQuestion()))   
+            setQuestions([...Array(QUESTIONS_COUNT)].map(() => createRandomMultiplicationQuestion()))   
             setStartedAt(Date.now())
         }
         else if(gameMode === 'addition') {
-            setQuestions([...Array(6)].map(() => createRandomAdditionQuestion()))   
+            setQuestions([...Array(QUESTIONS_COUNT)].map(() => createRandomAdditionQuestion()))   
             setStartedAt(Date.now())
         }
     }, [salt, gameMode])
@@ -122,6 +123,8 @@ const GameComponent = () => {
         setQuestions([])
     }
 
+    const score = questions.filter(q => questionStatus(q,0) === 'correct').length
+
     return <div id='game'>
         { currentQuestionIndex === -1 && questions.length > 0 && <div className='menu'>
             <div className="top">
@@ -132,9 +135,20 @@ const GameComponent = () => {
                         </div>) }
                 </div>
             </div>
-            <div className='game-result'>{ questions.filter(q => questionStatus(q,0) === 'correct').length} / { questions.length } | {endedAt && startedAt ? displayDuration(endedAt - startedAt) : '?'}''</div>
+            <div className='game-result'>
+                { score == questions.length && <div>
+                    <div>BRAVO!</div>
+                    <div>{endedAt && startedAt ? displayDuration(endedAt - startedAt) : '?'}</div>
+                </div>}
+                { score == questions.length -1 && <div>
+                    PRESQUE...
+                </div>}
+                { score < questions.length -1 && <div>
+                    ESSAIE ENCORE...
+                </div>}
+            </div>
             <div className='button' onClick={() => setup()}>Recommencer une partie</div>
-            
+            <Link to="/" className="button">Quitter la partie</Link>
         </div>
         }
         { currentQuestionIndex > -1 && questions.length > 0 && <div className='game-mode'>
@@ -144,6 +158,7 @@ const GameComponent = () => {
                         className={`result ${questionStatus(q, i)}`}>
                             <img src={getSvg(q, salt)}/>
                         </div>) }
+                    <Link to="/" className="result quit-button"><img src='/close.png'/></Link>
                 </div>
                 <div className='image'>
                     <img id='pokemon' src={getSvg(questions[currentQuestionIndex], salt)}/>
@@ -155,10 +170,8 @@ const GameComponent = () => {
             </div>
             
             <NumPad onSubmit={answer} onValueChanged={setCurrentAnswer} reset={currentQuestionIndex}/>
-            <div className="quit-button" onClick={quit}><img src='/close.png'/></div>
         </div>}
         <img id='pokeball' src="/pokeball.png"/>
-        <Link to="/" className="quit-button"><img src='/close.png'/></Link>
     </div>
 }
 export default GameComponent;

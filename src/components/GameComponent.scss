@@ -52,8 +52,12 @@
         width: 100%;
     }
 
+    .game-result {
+        font-size: 50px;
+    }
+
     .results {
-        padding: 50px 0 20px 0;
+        padding: 20px 0 20px 0;
         display: flex;
         justify-content: space-around;
 
@@ -81,8 +85,8 @@
             }
 
             &.correct {
-                background-color: #0f0;
-                box-shadow: 0 0 20px #0f0;
+                background-color: #5cbc58;
+                box-shadow: 0 0 20px #5cbc58;
             }
             &.incorrect {
                 background-color: #a00;
@@ -94,19 +98,14 @@
             img {
                 width: 60%;
             }
+
+            &.quit-button {
+                img {
+                    width: 40%;
+                }
+            }
         }
     }
 
-    .quit-button {
-        position: fixed;
-        top: 0;
-        right: 0;
-        color: #fff;
-        cursor: pointer;
-        width: 20px;
-        padding: 10px;
-        img {
-            width: 100%;
-        }
-    }
+    
 }
