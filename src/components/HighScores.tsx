@@ -29,10 +29,10 @@ const HighScores = () => {
     return <div className="highscores">
         <h1>Meilleurs Temps</h1>
         <div className="highscore-line">
-            Addition: { additionHighScore ? displayDuration(additionHighScore) : "Pas encore de temps" }
+            Additions: <span className="highlight">{ additionHighScore ? displayDuration(additionHighScore) : "Pas encore de temps" }</span>
         </div>
         <div className="highscore-line">
-            Multiplication: { multiplicationHighScore ? displayDuration(multiplicationHighScore) : "Pas encore de temps" }
+            Multiplications: <span className="highlight">{ multiplicationHighScore ? displayDuration(multiplicationHighScore) : "Pas encore de temps" }</span>
         </div>
         <Link className="button" to="/">Retour</Link>
     </div>
