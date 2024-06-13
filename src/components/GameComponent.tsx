@@ -8,7 +8,7 @@ import { saveGameStats } from "./StorageHelper";
 import { displayDuration } from "./FormatHelper";
 
 const GameComponent = () => {
-    const QUESTIONS_COUNT = 2
+    const QUESTIONS_COUNT = 6
     const { game_mode: gameMode  } = useParams();
     const [questions, setQuestions] = useState([] as Question[])
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1)
