@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 
 const Menu = () => {
     return <div className='menu'>
+        <h1>TABLES</h1>
         <Link
             to="/game/addition"
-            className='button'>TABLES D'ADDITIONS</Link>
+            className='button'>NOUVELLE PARTIE - ADDITIONS</Link>
         <Link
             to="/game/multiplication"
-            className='button'>TABLES DE MULTIPLICATIONS</Link>
+            className='button'>NOUVELLE PARTIE - MULTIPLICATIONS</Link>
         <div className="separator"/>
         <Link
             to="/highscores"
