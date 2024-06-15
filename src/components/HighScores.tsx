@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { loadGameStats } from "./StorageHelper"
+import { getHighscore } from "./StorageHelper"
 import _ from 'lodash'
 
 import './HighScores.scss'
@@ -10,21 +10,9 @@ const HighScores = () => {
     const [additionHighScore, setAdditionHighScore] = useState(undefined as undefined | number)
     const [multiplicationHighScore, setMultiplicationHighScore] = useState(undefined as undefined | number)
 
-    const computeHighScore = (games: Game[]) => _.min(
-            _.map(
-                _.filter(
-                    games,
-                    (game: Game) => _.every(
-                        game.questions,
-                        (q: { answer: any; correct_answer: any }) => q.answer == q.correct_answer
-                    )
-                ),
-                'duration'
-            )
-        )
     useEffect(() => {
-        setAdditionHighScore(computeHighScore(loadGameStats('addition')))
-        setMultiplicationHighScore(computeHighScore(loadGameStats('multiplication')))
+        setAdditionHighScore(getHighscore('addition'))
+        setMultiplicationHighScore(getHighscore('multiplication'))
     }, [])
     return <div className="highscores">
         <h1>Meilleurs Temps</h1>

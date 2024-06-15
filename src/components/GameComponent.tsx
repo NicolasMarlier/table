@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import NumPad from "./NumPad"
 import './GameComponent.scss'
 import { launchPokeballSuccess, launchPokeballFail } from "./AnimationHelper";
 import { useParams } from 'react-router';
 import { Link } from "react-router-dom";
-import { saveGameStats } from "./StorageHelper";
+import { getHighscore, saveGameStats } from "./StorageHelper";
 import { displayDuration } from "./FormatHelper";
 
 const GameComponent = () => {
@@ -16,12 +16,45 @@ const GameComponent = () => {
     const [startedAt, setStartedAt] = useState(undefined as number | undefined)
     const [endedAt, setEndedAt] = useState(undefined as number | undefined)
     const [salt, setSalt] = useState(0)
+    const [currentRecord, setCurrentRecord] = useState(undefined as number | undefined)
     
     const setup = () => {
         setSalt(salt + 1 + getRandomInt(10))
     }
 
+    const debugKeydown = useCallback((event: KeyboardEvent) => {
+        if (event.key === "a") {
+            setQuestions(questions.map((question) => ({
+                ...question,
+                ...{answer: question.correct_answer}
+            })))
+        }
+        if (event.key === "z") {
+            setQuestions(questions.map((question, i) => ({
+                ...question,
+                ...{answer: i == 0 ? question.correct_answer + 1 : question.correct_answer}
+            })))
+        }
+        if (event.key === "e") {
+            setQuestions(questions.map((question, i) => ({
+                ...question,
+                ...{answer: question.correct_answer + 1}
+            })))
+        }
+        if (event.key === "c") {
+            localStorage.clear()
+        }
+      }, [questions]);
+    
     useEffect(() => {
+        document.addEventListener("keydown", debugKeydown, false);
+        return () => {
+            document.removeEventListener("keydown", debugKeydown, false);
+        };
+    }, [debugKeydown]);
+
+    useEffect(() => {
+        setCurrentRecord(getHighscore(gameMode as GameMode))
         if(gameMode === 'multiplication') {
             setQuestions([...Array(QUESTIONS_COUNT)].map(() => createRandomMultiplicationQuestion()))   
             setStartedAt(Date.now())
@@ -119,18 +152,15 @@ const GameComponent = () => {
         return `/svg/${(question.a * 10 + question.b + 1 + s) % 150 + 1}.svg`
     }
 
-    const quit = () => {
-        setQuestions([])
-    }
-
     const score = questions.filter(q => questionStatus(q,0) === 'correct').length
+    const newHighScore = endedAt && startedAt && (currentRecord === undefined || ((endedAt - startedAt) < currentRecord))
 
     return <div id='game'>
         { currentQuestionIndex === -1 && questions.length > 0 && <div className='menu'>
             <div className="top">
                 <div className='results'>
                     { questions.map((q, i) => <div
-                        className={`result ${questionStatus(q, i)}`}>
+                        className={`result ${questionStatus(q, i)}`} key={i}>
                             <img src={getSvg(q, salt)}/>
                         </div>) }
                 </div>
@@ -138,7 +168,12 @@ const GameComponent = () => {
             <div className='game-result'>
                 { score == questions.length && <div>
                     <div>BRAVO!</div>
-                    <div>{endedAt && startedAt ? displayDuration(endedAt - startedAt) : '?'}</div>
+                    {endedAt && startedAt && <div>
+                        <div>{ displayDuration(endedAt - startedAt)}</div>
+                        { newHighScore && <div className="highlight">
+                             NOUVEAU RECORD !
+                        </div>}
+                    </div>}
                 </div>}
                 { score == questions.length -1 && <div>
                     PRESQUE...
@@ -155,7 +190,7 @@ const GameComponent = () => {
             <div className="top">
                 <div className='results'>
                     { questions.map((q, i) => <div
-                        className={`result ${questionStatus(q, i)}`}>
+                        className={`result ${questionStatus(q, i)}`} key={i}>
                             <img src={getSvg(q, salt)}/>
                         </div>) }
                     <Link to="/" className="result quit-button"><img src='/close.png'/></Link>
