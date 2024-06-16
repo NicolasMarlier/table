@@ -26,7 +26,8 @@ const NumPad = (props: Props) => {
     }, [value, onValueChanged])
 
     const submit = () => {
-        onSubmit(value || 0)
+        if(value === undefined) return;
+        onSubmit(value)
     }
 
     return <div id='numpad'>
