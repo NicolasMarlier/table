@@ -14,6 +14,9 @@ const Menu = () => {
         <Link
             to="/highscores"
             className='button'>MEILLEURS TEMPS</Link>
+        <div className="version">
+            v1.0.7
+        </div>
     </div>
 }
 
