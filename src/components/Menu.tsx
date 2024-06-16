@@ -2,6 +2,11 @@ import './Menu.scss'
 import { Link } from "react-router-dom";
 
 const Menu = () => {
+
+    const refresh = () => {
+        window.location.href = "/"
+    }
+
     return <div className='menu'>
         <img src="/pokeball.png" className="title-icon" alt="Main icon - pokeball"/>
         <Link
@@ -14,8 +19,8 @@ const Menu = () => {
         <Link
             to="/highscores"
             className='button'>MEILLEURS TEMPS</Link>
-        <div className="version">
-            v1.1.0
+        <div className="version" onClick={refresh}>
+            v1.1.1
         </div>
     </div>
 }
