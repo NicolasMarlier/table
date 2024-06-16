@@ -10,6 +10,10 @@ html, body, #root {
   font-style: normal;
   margin: 0;
   padding: 0;
+  position: fixed;
+}
+body {
+  touch-action: pan-y;
 }
 
 h1 {
