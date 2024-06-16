@@ -20,7 +20,7 @@ const Menu = () => {
             to="/highscores"
             className='button'>MEILLEURS TEMPS</Link>
         <div className="version" onClick={refresh}>
-            v1.1.1
+            v1.1.2
         </div>
     </div>
 }
