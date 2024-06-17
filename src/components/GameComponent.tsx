@@ -167,10 +167,10 @@ const GameComponent = () => {
             </div>
             <div className='game-result'>
                 { score == questions.length && <div>
-                    <div>BRAVO!</div>
+                    <div className="headline">BRAVO!</div>
                     {endedAt && startedAt && <div>
-                        <div>{ displayDuration(endedAt - startedAt)}</div>
-                        { newHighScore && <div className="highlight">
+                        <div className="score">{ displayDuration(endedAt - startedAt)}</div>
+                        { newHighScore && <div className="new-highscore">
                              NOUVEAU RECORD !
                         </div>}
                     </div>}
