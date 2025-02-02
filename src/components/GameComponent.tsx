@@ -83,7 +83,8 @@ const GameComponent = () => {
     }, [currentQuestionIndex])
     
     const createRandomMultiplicationQuestion = (): Question => {
-        const a = getRandomInt(4) + 2
+        //const a = getRandomInt(4) + 2
+        const a = 7
         const b = getRandomInt(10)
         return {
             a,
