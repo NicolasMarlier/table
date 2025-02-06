@@ -2,14 +2,18 @@ import { useCallback, useEffect, useState } from "react"
 import NumPad from "./NumPad"
 import './GameComponent.scss'
 import { launchPokeballSuccess, launchPokeballFail } from "./AnimationHelper";
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { Link } from "react-router-dom";
 import { getHighscore, saveGameStats } from "./StorageHelper";
 import { displayDuration } from "./FormatHelper";
+import _ from "lodash";
 
 const GameComponent = () => {
     const QUESTIONS_COUNT = 6
-    const { game_mode: gameMode  } = useParams();
+    const { game_mode: gameMode,  } = useParams();
+    const location = useLocation();
+
+    const tables = new URLSearchParams(location.search).get('tables')?.split(',').map(t => parseInt(t));
     const [questions, setQuestions] = useState([] as Question[])
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1)
     const [currentAnswer, setCurrentAnswer] = useState(undefined as number | undefined)
@@ -83,8 +87,7 @@ const GameComponent = () => {
     }, [currentQuestionIndex])
     
     const createRandomMultiplicationQuestion = (): Question => {
-        //const a = getRandomInt(4) + 2
-        const a = 7
+        const a =  _.sample(tables) || 0
         const b = getRandomInt(10)
         return {
             a,
@@ -96,7 +99,7 @@ const GameComponent = () => {
     }
 
     const createRandomAdditionQuestion = (): Question => {
-        const a = getRandomInt(5) + 1
+        const a =  _.sample(tables) || 0
         const b = getRandomInt(10)
         return {
             a,
