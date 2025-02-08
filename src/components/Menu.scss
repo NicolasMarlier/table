@@ -32,6 +32,8 @@
             font-size: 1.3em;
             padding: 0 0.6em;
             color: #00000033;
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
             &.checked {
                 color: #fff;
                 text-shadow: #444 5px 5px 0px;

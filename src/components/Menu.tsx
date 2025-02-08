@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Menu.scss'
 import { Link } from "react-router-dom";
+import { getLocalStorage, setLocalStorage } from './StorageHelper';
 
 const Menu = () => {
 
     const refresh = () => {
         window.location.href = "/"
     }
-    const [gameMode, setGameMode] = useState(undefined as GameMode | undefined)
     const possibleTables = [2, 3, 4, 5, 6, 7, 8, 9]
-    const [tables, setTables] = useState(possibleTables)
+    const [tables, setTables] = useState(getLocalStorage('tables') || possibleTables)
     
     const tableToggled = (table: number) =>  tables.indexOf(table) > -1
     const toggleTable = (table: number) => {
@@ -17,9 +17,13 @@ const Menu = () => {
             setTables([...tables, ...[table]].toSorted())
         }
         else {
-            setTables(tables.filter(t => t !== table))
+            setTables(tables.filter((t: number) => t !== table))
         }
     }
+
+    useEffect(() => {
+        setLocalStorage('tables', tables)
+    }, [tables])
 
     return <div className='menu'>
         <img src="/pokeball.png" className="title-icon" alt="Main icon - pokeball"/>
@@ -42,7 +46,7 @@ const Menu = () => {
             to="/highscores"
             className='button'>MEILLEURS TEMPS</Link>
         <div className="version" onClick={refresh}>
-            v1.3.0
+            v1.3.1
         </div>
     </div>
 }

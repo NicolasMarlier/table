@@ -2,15 +2,29 @@ import _ from "lodash"
 
 const localStorageKey = (gameMode: GameMode) => `games-${gameMode}`
 
-const saveGameStats = (game: Game) => {
-    window.localStorage.setItem(localStorageKey(game.mode), JSON.stringify([
+
+
+const setLocalStorage = (key: string, value: any) => {
+    window.localStorage.setItem(key, JSON.stringify(value))
+}
+
+const getLocalStorage = (key: string) => {
+    const value = window.localStorage.getItem(key)
+    return value ? JSON.parse(value) : undefined
+}
+
+const saveGameStats = (game: Game) => setLocalStorage(
+    localStorageKey(game.mode),
+    [
         ...loadGameStats(game.mode),
         ...[game],
-    ]))
-}
-const loadGameStats = (gameMode: GameMode) => JSON.parse(
-    window.localStorage.getItem(localStorageKey(gameMode)) || '[]'
+    ]
 )
+
+const loadGameStats = (gameMode: GameMode) => getLocalStorage(
+    localStorageKey(gameMode)
+)
+
 
 const computeHighScore = (games: Game[]) => _.min(
     _.map(
@@ -31,4 +45,6 @@ const getHighscore = (gameMode: GameMode) => computeHighScore(loadGameStats(game
 export {
     getHighscore,
     saveGameStats,
+    getLocalStorage,
+    setLocalStorage,
 }
