@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './Menu.scss'
 import { Link } from "react-router-dom";
 import { getLocalStorage, setLocalStorage } from './StorageHelper';
+import _ from 'lodash';
 
 const Menu = () => {
 
@@ -14,7 +15,7 @@ const Menu = () => {
     const tableToggled = (table: number) =>  tables.indexOf(table) > -1
     const toggleTable = (table: number) => {
         if(tables.indexOf(table) == -1) {
-            setTables([...tables, ...[table]].toSorted())
+            setTables(_.sortedUniq([...tables, ...[table]]))
         }
         else {
             setTables(tables.filter((t: number) => t !== table))
@@ -46,7 +47,7 @@ const Menu = () => {
             to="/highscores"
             className='button'>MEILLEURS TEMPS</Link>
         <div className="version" onClick={refresh}>
-            v1.3.1
+            v1.3.2
         </div>
     </div>
 }
