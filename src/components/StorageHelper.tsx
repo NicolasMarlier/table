@@ -23,7 +23,7 @@ const saveGameStats = (game: Game) => setLocalStorage(
 
 const loadGameStats = (gameMode: GameMode) => getLocalStorage(
     localStorageKey(gameMode)
-)
+) || []
 
 
 const computeHighScore = (games: Game[]) => _.min(
